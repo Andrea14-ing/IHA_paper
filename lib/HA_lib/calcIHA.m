@@ -64,7 +64,7 @@ wg2 = LogisticFunc(wg,1,0.3,30); % logistic function
 % apply the threshold and filter IHA
 norig = n;
 sorig = s;
-trsh =  0.2 * nanmax(wmod); % rad/s
+trsh =  0.1 * nanmax(wmod); % rad/s
 for k = 1:nF
     if wmod(k) <= trsh
         n(k,:) = nan(1,3);

@@ -49,8 +49,8 @@ function [FHA, MFHA] = calcFHA(T2_1)
 % Author(s) retain the right to alter this disclaimer at any time. 
 
 
-T1_2 = Hinv(T2_1); % to have the results expressed in {1}
-
+%T1_2 = Hinv(T2_1); % to have the results expressed in {1}
+T1_2 = T2_1;
 nF = size(T1_2,3);
 
 
