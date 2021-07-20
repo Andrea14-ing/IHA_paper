@@ -2,6 +2,8 @@
 This repository contains the code for calculating the Instantaneous Helical Axis, Finite Helical Axis and Average Helical Axis. Some sample data are provided. 
 Please run the script MAIN.m
 
+The code was developed with MATLAB R2021a.
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
