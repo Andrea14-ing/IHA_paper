@@ -49,9 +49,9 @@ load('.\DATA\\HingeSampleData.mat');
 % Ancillao, A., et al.,(2020). Estimating the instantaneous screw axis and the screw axis invariant descriptor of motion by means of inertial sensors: An experimental study with a mechanical hinge joint and comparison to the optoelectronic system. Sensors (Switzerland), 20(1). https://doi.org/10.3390/s20010049
 
 % Load a structure named "hinge" containing the following fields:
-% fs: 100                   The sampling frequency
-% T1_0: [4×4×3941 double]   Pose of proximal segment
-% T2_0: [4×4×3941 double]   Pose of distal segment
+% fs = 100                  The sampling frequency
+% T1_0: [4×4×3941 double]   Pose of proximal segment in {0}
+% T2_0: [4×4×3941 double]   Pose of distal segment in {0}
 % GA_0: [3941×6 double]     Geometric rotation axis, direction and origin
 % markers: [1×1 struct]     Coordinates of measured markers
 % tw1_0: [3941×6 double]    Screw twist of proximal segment seen in {0}
@@ -66,10 +66,11 @@ tw21_1 = hinge.tw21_1;
 % Visualize the motion in the CS{0}
 figure;
 hold on; grid on; box on; grid minor;
-plotH(0.1,eye(4),'k');
+h4 = plotH(0.1,eye(4),'k');
 nF = size(T1,3); % number of samples
+h0 = plotHingeMarkers(hinge.markers,100,'b');
 h1 = plotH(0.1,T1(:,:,1),'b');
-h3 = plotSA(GA_0(1,:) , 0.3, 'c','LineWidth',2);
+%h3 = plotSA(GA_0(1,:) , 0.3, 'c','LineWidth',2);
 for k=1:5:200
    h2 = plotH(0.1,T2(:,:,k),'r');
 end
@@ -78,8 +79,8 @@ view([30,15]);
 xlabel('x - [m]');
 ylabel('y - [m]');
 zlabel('z - [m]');
-legend([h1, h2, h3],{'CS 1','CS 2','G.A.'});
-title('Poses of hinge segments');
+legend([h0, h1, h2, h4],{'Markers','CS \{1\}','CS \{2\}','CS \{0\}'});
+title('Motion of the hinge joint');
 
 if 0
 % Animated plot of the motion (press ctr+c to interrupt)
@@ -133,7 +134,7 @@ nF = size(T1,3);
 RF = 100;
 h1 = plotHingeMarkers(hinge.markers,RF,'b');
 h2 = plotSA(AHA_0(RF,:), 1, 'g','LineWidth',3);
-h3 = plotSA2(IHA_0 , 0.3, 'b','LineWidth',1);
+h3 = plotSA2(IHA_0 , 0.3, 'b','LineWidth',0.5);
 h4 = plotH(0.1,T1(:,:,RF),'b');
 h5 = plotH(0.1,T2(:,:,RF),'r');
 h6 = plotH(0.1,Taha_0(:,:,RF),'g');
@@ -145,7 +146,7 @@ xlabel('x - [m]');
 ylabel('y - [m]');
 zlabel('z - [m]');
 legend([h1, h4, h5,h3,h2,h6],{'Markers','CS 1','CS 2','IHA','AHA','CS AHA'});
-title('Instantaneous Helical Axis of an hinge motion');
+title('Instantaneous Helical Axis of the hinge motion');
 
 
 %% 3 Dispersion analysis of the IHA
@@ -178,6 +179,8 @@ view([35,15]);
 xlabel('x - [m]');
 ylabel('y - [m]');
 zlabel('z - [m]');
+xlim([-0.8 0.8]);
+ylim([-0.8,0.8]);
 legend([h1, h2,h3,h4],{'AHA','CS AHA','IHA','Ref. Plane'});
 title('Dispersion analysis of the IHA seen in CS \{AHA\}');
 
@@ -194,6 +197,7 @@ title('Intersection with ref. plane and confidence ellipse');
 xlabel('x');
 ylabel('y');
 axis equal
+
 
 
 %% 4 Parameters
@@ -221,6 +225,11 @@ ylabel('[m]');
 xlim([1,length(x)]);
 title('DIstance between IHA and AHA');
 
+% the RMSE errors (Stokdijk et al. 1999)
+dist(isnan(dist(:,1)),:) = [];
+ang(isnan(ang(:,1)),:) = [];
+Se = sqrt( mean( mvarray(dist).^2))
+Ne = sqrt( mean( ang.^2))
 
 
 %% 5 Now calculate the FHA and AHA (MFHA) based on FHA
@@ -274,7 +283,7 @@ xlabel('x - [m]');
 ylabel('y - [m]');
 zlabel('z - [m]');
 legend([h1, h4, h5,h3,h2,h6],{'Markers','CS 1','CS 2','FHA','MHA','CS MFHA'});
-title('Finite Helical Axis of an hinge motion');
+title('Finite Helical Axis of the hinge motion');
 
 
 
@@ -301,7 +310,7 @@ subplot 121
 hold on; grid on; box on; grid minor; axis equal;
 h1 = plotSA(MFHA_mfha, 1.5, 'g','LineWidth',3);
 h2 = plotH(0.5,eye(4),'g');
-h3 = plotSA2(FHA_mfha , 1.3, 'b','LineWidth',1);
+h3 = plotSA2(FHA_mfha , 1.3, 'b','LineWidth',0.5);
 n = dispParam.Tpl(1:3,3)';
 O = dispParam.Tpl(1:3,4)';
 h4 = plotPlane(n,O,0.5,'c',0.5);
@@ -309,6 +318,8 @@ view([35,15]);
 xlabel('x - [m]');
 ylabel('y - [m]');
 zlabel('z - [m]');
+xlim([-0.8 0.8]);
+ylim([-0.8,0.8]);
 legend([h1, h2,h3,h4],{'MFHA','CS MFHA','FHA','Ref. Plane'});
 title('Dispersion analysis of the FHA seen in CS \{MFHA\}');
 
@@ -349,6 +360,10 @@ xlabel('Sample n.');
 ylabel('[m]');
 title('DIstance between FHA and MFHA');
 
-
+% the RMSE errors (Stokdijk et al. 1999)
+dist(isnan(dist(:,1)),:) = [];
+ang(isnan(ang(:,1)),:) = [];
+Se = sqrt( mean( mvarray(dist).^2))
+Ne = sqrt( mean( ang.^2))
 
 

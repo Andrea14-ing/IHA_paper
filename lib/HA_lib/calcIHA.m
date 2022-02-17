@@ -96,17 +96,13 @@ Sopt = inv(Q)*Q2;
 Sopt = Sopt';
 
 % Optimal direction - weighted
-Qi = nan(3,3,nF);
-ni = nan(nF,3);
+ni = nan(3,3,nF);
 for i=1:nF
-       Qi(:,:,i) = wg2(i).*( eye(3)-(n(i,:)'*n(i,:)) );
-       ni(i,:) = ( Qi(:,:,i) * n(i,:)' )';
+       ni(:,:,i) = wg2(i).*(n(i,:)'*n(i,:) )';
 end
-Q = nanmean(Qi,3);
-Q2 = nanmean(ni,1)';
-Nopt = pinv(Q)*Q2;
-[~, Nopt] = mvarray(Nopt');
-
+ntot = nansum(ni,3);
+[U,~,~] = svd(ntot); 
+Nopt = U(:,1)';
 
 % LCS attached to the AHA
 Topt = HA2CS(Nopt,Sopt);
