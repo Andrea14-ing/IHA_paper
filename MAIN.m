@@ -134,12 +134,12 @@ nF = size(T1,3);
 RF = 100;
 h1 = plotHingeMarkers(hinge.markers,RF,'b');
 h2 = plotSA(AHA_0(RF,:), 1, 'g','LineWidth',3);
-h3 = plotSA2(IHA_0 , 0.3, 'b','LineWidth',0.5);
+h3 = plotSA2(IHA_0 , 0.3, 'b','LineWidth',0.3);
 h4 = plotH(0.1,T1(:,:,RF),'b');
 h5 = plotH(0.1,T2(:,:,RF),'r');
-h6 = plotH(0.1,Taha_0(:,:,RF),'g');
+h6 = plotH(0.15,Taha_0(:,:,RF),'g');
 view([35,15]);
-xlim([-0.8743    0.3925]);
+xlim([-0.7    0.2]);
 ylim([-0.5461    0.4530]);
 zlim([-0.0857    0.9134]);
 xlabel('x - [m]');
@@ -223,13 +223,13 @@ plot(x,dist);
 xlabel('Sample n.');
 ylabel('[m]');
 xlim([1,length(x)]);
-title('DIstance between IHA and AHA');
+title('Distance between IHA and AHA');
 
 % the RMSE errors (Stokdijk et al. 1999)
 dist(isnan(dist(:,1)),:) = [];
 ang(isnan(ang(:,1)),:) = [];
-Se = sqrt( mean( mvarray(dist).^2))
-Ne = sqrt( mean( ang.^2))
+E_S = sqrt( mean( mvarray(dist).^2)) *1000
+E_n = sqrt( mean( ang.^2))
 
 
 %% 5 Now calculate the FHA and AHA (MFHA) based on FHA
@@ -271,18 +271,18 @@ nF = size(T1,3);
 RF = 100;
 h1 = plotHingeMarkers(hinge.markers,RF,'b');
 h2 = plotSA(FHA_0(RF,:), 1, 'm','LineWidth',3);
-h3 = plotSA2(FHA_0 , 0.3, 'b','LineWidth',1);
+h3 = plotSA2(FHA_0 , 0.3, 'b','LineWidth',0.3);
 h4 = plotH(0.1,T1(:,:,RF),'b');
 h5 = plotH(0.1,T2(:,:,RF),'r');
-h6 = plotH(0.1,Tmfha_0(:,:,RF),'m');
+h6 = plotH(0.15,Tmfha_0(:,:,RF),'m');
 view([35,15]);
-xlim([-0.8743    0.3925]);
+xlim([-0.7    0.2]);
 ylim([-0.5461    0.4530]);
 zlim([-0.0857    0.9134]);
 xlabel('x - [m]');
 ylabel('y - [m]');
 zlabel('z - [m]');
-legend([h1, h4, h5,h3,h2,h6],{'Markers','CS 1','CS 2','FHA','MHA','CS MFHA'});
+legend([h1, h4, h5,h3,h2,h6],{'Markers','CS 1','CS 2','FHA','AHA (MFHA)','CS MFHA'});
 title('Finite Helical Axis of the hinge motion');
 
 
@@ -308,8 +308,8 @@ dispParam = dispersionAnalysis(FHA_mfha, eye(4), d, 0);
 figure;
 subplot 121
 hold on; grid on; box on; grid minor; axis equal;
-h1 = plotSA(MFHA_mfha, 1.5, 'g','LineWidth',3);
-h2 = plotH(0.5,eye(4),'g');
+h1 = plotSA(MFHA_mfha, 1.5, 'm','LineWidth',3);
+h2 = plotH(0.5,eye(4),'m');
 h3 = plotSA2(FHA_mfha , 1.3, 'b','LineWidth',0.5);
 n = dispParam.Tpl(1:3,3)';
 O = dispParam.Tpl(1:3,4)';
@@ -320,7 +320,7 @@ ylabel('y - [m]');
 zlabel('z - [m]');
 xlim([-0.8 0.8]);
 ylim([-0.8,0.8]);
-legend([h1, h2,h3,h4],{'MFHA','CS MFHA','FHA','Ref. Plane'});
+legend([h1, h2,h3,h4],{'AHA (MFHA)','CS MFHA','FHA','Ref. Plane'});
 title('Dispersion analysis of the FHA seen in CS \{MFHA\}');
 
 subplot 122
@@ -363,7 +363,7 @@ title('DIstance between FHA and MFHA');
 % the RMSE errors (Stokdijk et al. 1999)
 dist(isnan(dist(:,1)),:) = [];
 ang(isnan(ang(:,1)),:) = [];
-Se = sqrt( mean( mvarray(dist).^2))
-Ne = sqrt( mean( ang.^2))
+E_S = sqrt( mean( mvarray(dist).^2)) * 1000 % in [mm]
+E_n = sqrt( mean( ang.^2))
 
 

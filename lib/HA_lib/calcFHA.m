@@ -103,6 +103,16 @@ T = HA2CS(ntot,stot);
 %   end
 % end
 
+% threshold
+thrsh = 0.5; %[deg]
+for k=1:nF
+    if (phitot(k).*180/pi) < thrsh
+        ntot(k) = nan;
+        stot(k) = nan;
+        T(:,:,k) = nan(4,4);
+    end
+end
+
 % store FHA data
 FHA.n = ntot;
 FHA.s = stot;
