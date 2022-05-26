@@ -4,6 +4,12 @@ Please run the script MAIN.m
 
 The code was developed with MATLAB R2021a.
 
+If you found this code useful, please cite:
+Ancillao, A. (2022). The helical axis of anatomical joints: calculation methods, literature review, and software implementation. Medical & Biological Engineering & Computing. https://doi.org/10.1007/s11517-022-02576-2
+
+Ancillao, A. (2018). Modern Functional Evaluation Methods for Muscle Strength and Gait Analysis. Springer International Publishing. https://doi.org/10.1007/978-3-319-67437-7
+
+
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
