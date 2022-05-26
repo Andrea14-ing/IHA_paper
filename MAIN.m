@@ -17,6 +17,9 @@
 % KU Leuven, Leuven ,BE.
 % Last edit: 07/2021
 
+% If you found this code useful, please cite:
+% Ancillao, A. (2022). The helical axis of anatomical joints: calculation methods, literature review, and software implementation. Medical & Biological Engineering & Computing. https://doi.org/10.1007/s11517-022-02576-2
+% Ancillao, A. (2018). Modern Functional Evaluation Methods for Muscle Strength and Gait Analysis. Springer International Publishing. https://doi.org/10.1007/978-3-319-67437-7
 
 % DISCLAIMER:
 % This code is for demonstration purposes only.
